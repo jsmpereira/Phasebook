@@ -1,5 +1,5 @@
-/PhasebookEJB/.classpath
-/PhasebookEJB/.project
-/PhasebookEJB/.settings
-/PhasebookEJB/build
-/PhasebookEJB/transaction.log
+/*/.classpath
+/*/.project
+/*/.settings
+/*/build
+/*/transaction.log
