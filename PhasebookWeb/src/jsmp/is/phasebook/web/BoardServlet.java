@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jsmp.is.phasebook.db.User;
-import jsmp.is.phasebook.ejb.Register;
+import jsmp.is.phasebook.ejb.MessageBoard;
 
 /**
- * Servlet implementation class Register
+ * Servlet implementation class BoardServlet
  */
-@WebServlet("/Register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/Board")
+public class BoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	@EJB Register registration;
-
+	
+	@EJB MessageBoard messageboard;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public BoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,22 +32,24 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("register.jsp").forward(request, response);
+		
+		int board_id = Integer.parseInt(request.getParameter("id"));
+		
+		request.setAttribute("topics", messageboard.getTopics(board_id));
+		
+		request.getRequestDispatcher("board.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = new User(request.getParameter("name"), request.getParameter("email"), request.getParameter("password"));
 		
-		if (registration.register(user)) {
-			request.setAttribute("registered", true);
-		} else {
-			request.setAttribute("registered", false);
-		}
+		int user_id = (Integer) request.getSession().getAttribute("user_id");
 		
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		messageboard.createTopic(Integer.parseInt(request.getParameter("board_id")), request.getParameter("title"), request.getParameter("body"), user_id);
+		
+		request.getRequestDispatcher("/board.jsp").forward(request, response);
 	}
 
 }

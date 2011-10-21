@@ -25,6 +25,12 @@ public class Topic {
 	
 	public Topic() {}
 
+	public Topic(String title, String body, User creator) {
+		this.title = title;
+		this.body = body;
+		this.creator = creator;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
