@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,12 +19,16 @@ public class Board {
 	private int id;
 	@OneToMany(mappedBy="board")
 	private List<Topic> topics;
-	@OneToOne
-	@JoinColumn(name="owner_id")
+	@ManyToOne
 	private User owner;
+	private boolean isPrivate;
 	
 	public Board() {}
-
+	
+	public Board(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -39,6 +43,14 @@ public class Board {
 
 	public List<Topic> getTopics() {
 		return topics;
+	}
+
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public boolean isPrivate() {
+		return isPrivate;
 	}
 
 	public void setOwner(User owner) {

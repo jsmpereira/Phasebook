@@ -2,6 +2,7 @@ package jsmp.is.phasebook.ejb;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,6 +13,7 @@ public @Stateless class RegisterBean implements Register {
 
 	@PersistenceContext(unitName="PhasebookJPA")
 	private EntityManager em;
+	@EJB MessageBoard messageboard;
 	
 	public boolean register(User user) {
 		List<User> results = em.createQuery("SELECT email FROM User u WHERE u.email = :user_email")
@@ -20,8 +22,13 @@ public @Stateless class RegisterBean implements Register {
 		if(!results.isEmpty()) {
 			// user exists
 		} else {
-			//register new user
+			//register new user			
+			// write user to db
 			em.persist(user);
+			
+			// create public and private board
+			messageboard.createMessageBoard(user, false);
+			messageboard.createMessageBoard(user, true);
 			return true;
 		}
 		return false;

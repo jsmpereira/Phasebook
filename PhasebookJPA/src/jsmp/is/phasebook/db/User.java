@@ -1,11 +1,14 @@
 package jsmp.is.phasebook.db;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +25,8 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private boolean loggedIn;
+	@OneToMany(mappedBy="owner", cascade=CascadeType.ALL) 
+	private List<Board> boards;
 	
 	public User() {}
 	
@@ -74,6 +79,14 @@ public class User implements Serializable {
 
 	public boolean isLoggedIn() {
 		return loggedIn;
+	}
+
+	public void setBoards(List<Board> boards) {
+		this.boards = boards;
+	}
+
+	public List<Board> getBoards() {
+		return boards;
 	}
 
 }
