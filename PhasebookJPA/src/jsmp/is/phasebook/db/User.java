@@ -27,6 +27,8 @@ public class User implements Serializable {
 	private boolean loggedIn;
 	@OneToMany(mappedBy="owner", cascade=CascadeType.ALL) 
 	private List<Board> boards;
+	@OneToMany(mappedBy="friend")
+	private List<Friendship> friends;
 	
 	public User() {}
 	
@@ -87,6 +89,14 @@ public class User implements Serializable {
 
 	public List<Board> getBoards() {
 		return boards;
+	}
+
+	public void setFriends(List<Friendship> friends) {
+		this.friends = friends;
+	}
+
+	public List<Friendship> getFriends() {
+		return friends;
 	}
 
 }

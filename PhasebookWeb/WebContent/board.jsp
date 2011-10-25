@@ -19,7 +19,7 @@
 	</c:forEach>
 
 <h2>Create topic </h2>
-<form action="Board" method="post">
+<form action="Boards" method="post">
 	<dl>
 		<dd><label>Title</label></dd>
 		<dt><input type="text" name="title" /></dt>

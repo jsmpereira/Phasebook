@@ -14,8 +14,8 @@ import jsmp.is.phasebook.ejb.MessageBoard;
 /**
  * Servlet implementation class BoardServlet
  */
-@WebServlet("/Board")
-public class BoardServlet extends HttpServlet {
+@WebServlet("/Boards")
+public class BoardsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB MessageBoard messageboard;
@@ -23,7 +23,7 @@ public class BoardServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardServlet() {
+    public BoardsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
