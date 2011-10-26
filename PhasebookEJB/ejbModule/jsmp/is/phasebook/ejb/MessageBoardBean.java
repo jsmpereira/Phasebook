@@ -1,5 +1,6 @@
 package jsmp.is.phasebook.ejb;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -27,7 +28,7 @@ public @Stateless class MessageBoardBean implements MessageBoard {
 		Board board = em.find(Board.class, board_id);
 		User creator = em.find(User.class, user_id);
 		
-		Topic topic = new Topic(title, body, creator);
+		Topic topic = new Topic(title, body, creator, new Date());
 		topic.setBoard(board);		
 		em.persist(topic);
 	}

@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+body { 
+	margin: 0px;
+	padding: 10px;
+	font-size: 11px;
+	font-family: "Lucida Grande", "Helvetica", "Verdana", "Arial";
+}
+
+ul#menu li {
+	list-style: none;
+	display: inline;
+	padding: 3px;
+}

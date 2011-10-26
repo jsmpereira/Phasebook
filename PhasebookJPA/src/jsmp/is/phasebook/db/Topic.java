@@ -1,5 +1,8 @@
 package jsmp.is.phasebook.db;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,14 +24,17 @@ public class Topic {
 	@JoinColumn(name="creator_id")
 	private User creator;
 	private String title;
+	@Column(columnDefinition="TEXT")
 	private String body;
+	private Date created_at;
 	
 	public Topic() {}
 
-	public Topic(String title, String body, User creator) {
+	public Topic(String title, String body, User creator, Date created_at) {
 		this.title = title;
 		this.body = body;
 		this.creator = creator;
+		this.created_at = created_at;
 	}
 	
 	public void setId(int id) {
@@ -69,5 +75,13 @@ public class Topic {
 
 	public String getBody() {
 		return body;
+	}
+
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+
+	public Date getCreated_at() {
+		return created_at;
 	}
 }

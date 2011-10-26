@@ -19,10 +19,10 @@ public class Friendship implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="user_id")
 	private User user;
 	@ManyToOne
-	@JoinColumn(name = "friend_id")
+	@PrimaryKeyJoinColumn(name = "friend_id", referencedColumnName="friend_id")
 	private User friend;
 	private Date accepted_at;
 

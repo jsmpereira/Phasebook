@@ -1,6 +1,7 @@
 package jsmp.is.phasebook.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsmp.is.phasebook.db.Friendship;
 import jsmp.is.phasebook.ejb.Users;
 
 /**
@@ -19,6 +21,7 @@ public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	@EJB Users users;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,8 +35,15 @@ public class UsersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//list users
-		request.setAttribute("users", users.getUsers());
+		
+		if (request.getParameter("user_search") != null) {
+			// search users
+			request.setAttribute("users", users.findUsers(request.getParameter("user_search")));
+		} else {
+			// list users
+			request.setAttribute("users", users.getUsers());
+		}
+		
 		request.getRequestDispatcher("users.jsp").forward(request, response);
 		
 	}
@@ -46,11 +56,17 @@ public class UsersServlet extends HttpServlet {
 		
 		// friendship request
 		int user_id = (Integer) request.getSession().getAttribute("user_id");
-		int friend_id = Integer.parseInt(request.getParameter("friend_id"));
 		
-		users.requestFriendShip(user_id, friend_id);
+		if (request.getParameter("accept_friend_id") != null) {
+			int friend_id = Integer.parseInt(request.getParameter("accept_friend_id"));
+			users.acceptFriendship(friend_id, user_id);
+		}
+		else {
+			 int friend_id = Integer.parseInt(request.getParameter("request_friend_id"));
+			 users.requestFriendShip(user_id, friend_id);
+		}
 		
-		request.getRequestDispatcher("/users.jsp").forward(request, response);
+		response.sendRedirect("/PhasebookWeb/Users");
 	}
 
 }

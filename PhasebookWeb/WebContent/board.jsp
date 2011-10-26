@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="styles.css">
 <title>Phasebook Board</title>
 </head>
 <body>
@@ -14,7 +15,7 @@
 
 	<c:forEach items="${topics}" var="topic" >
 		<h3><c:out value="${topic.title}" /></h3>
-		<small><c:out value="${topic.creator.name}" /></small>
+		<small><c:out value="${topic.created_at}" /> <c:out value="${topic.creator.name}" /></small>
 		<blockquote><c:out value="${topic.body}" /></blockquote>
 	</c:forEach>
 
