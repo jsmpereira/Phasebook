@@ -13,7 +13,7 @@ public @Stateless class RegisterBean implements Register {
 
 	@PersistenceContext(unitName="PhasebookJPA")
 	private EntityManager em;
-	@EJB MessageBoard messageboard;
+	@EJB MessageBoard messageboardBean;
 	
 	public boolean register(User user) {
 		List<User> results = em.createQuery("SELECT email FROM User u WHERE u.email = :user_email")
@@ -27,25 +27,10 @@ public @Stateless class RegisterBean implements Register {
 			em.persist(user);
 			
 			// create public and private board
-			messageboard.createMessageBoard(user, false);
-			messageboard.createMessageBoard(user, true);
+			messageboardBean.createMessageBoard(user, false);
+			messageboardBean.createMessageBoard(user, true);
 			return true;
 		}
 		return false;
 	}
-	
-	/*public static void main(String args[]) {
-		RegisterBean reg = new RegisterBean();
-		AuthenticationBean auth = new AuthenticationBean();
-		
-		User user = new User("manuel Pedro", "jsmp@student.dei.uc.pt", "bingo");
-		//reg.register(user);
-		
-		System.out.println(".... login in...");
-		
-		auth.logout(user);
-		
-		
-	}*/
-
 }

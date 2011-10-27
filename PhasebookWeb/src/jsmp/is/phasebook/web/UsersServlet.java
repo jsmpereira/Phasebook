@@ -20,7 +20,7 @@ import jsmp.is.phasebook.ejb.Users;
 public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
-	@EJB Users users;
+	@EJB Users usersBean;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,10 +38,10 @@ public class UsersServlet extends HttpServlet {
 		
 		if (request.getParameter("user_search") != null) {
 			// search users
-			request.setAttribute("users", users.findUsers(request.getParameter("user_search")));
+			request.setAttribute("users", usersBean.findUsers(request.getParameter("user_search")));
 		} else {
 			// list users
-			request.setAttribute("users", users.getUsers());
+			request.setAttribute("users", usersBean.getUsers());
 		}
 		
 		request.getRequestDispatcher("users.jsp").forward(request, response);
@@ -59,11 +59,11 @@ public class UsersServlet extends HttpServlet {
 		
 		if (request.getParameter("accept_friend_id") != null) {
 			int friend_id = Integer.parseInt(request.getParameter("accept_friend_id"));
-			users.acceptFriendship(friend_id, user_id);
+			usersBean.acceptFriendship(friend_id, user_id);
 		}
 		else {
 			 int friend_id = Integer.parseInt(request.getParameter("request_friend_id"));
-			 users.requestFriendShip(user_id, friend_id);
+			 usersBean.requestFriendShip(user_id, friend_id);
 		}
 		
 		response.sendRedirect("/PhasebookWeb/Users");

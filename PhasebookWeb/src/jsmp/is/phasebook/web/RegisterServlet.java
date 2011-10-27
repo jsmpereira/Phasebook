@@ -19,7 +19,7 @@ import jsmp.is.phasebook.ejb.Register;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	@EJB Register registration;
+	@EJB Register registrationBean;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,7 +42,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = new User(request.getParameter("name"), request.getParameter("email"), request.getParameter("password"));
 		
-		if (registration.register(user)) {
+		if (registrationBean.register(user)) {
 			request.setAttribute("registered", true);
 		} else {
 			request.setAttribute("registered", false);

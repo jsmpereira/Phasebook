@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="javax.naming.*, java.util.List, jsmp.is.phasebook.db.User, jsmp.is.phasebook.ejb.Users" %>
+<%@ page import="javax.naming.*, java.util.List, jsmp.is.phasebook.db.User, jsmp.is.phasebook.db.Board, jsmp.is.phasebook.ejb.Users" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,10 +13,10 @@
 <body>
 <%
 	InitialContext ic = new InitialContext();
-	Users theusers = (Users) ic.lookup("Phasebook/UsersBean/remote");
+	Users usersBean = (Users) ic.lookup("Phasebook/UsersBean/remote");
 	
 	List<User> users = (List<User>) request.getAttribute("users");
-	int user_id = (Integer) session.getAttribute("user_id");
+	User current_user  = (User) session.getAttribute("user");
 %>
 
 <jsp:include page="sidebar.jsp" />
@@ -28,31 +28,57 @@
 		<input type="submit" value="Search" />
 	</form>
 
-	<% for (User user: users) { %>
-		<h3><%= user.getName() %></h3>
-		<small><%= user.getEmail() %></small>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Boards</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for (User user: users) { %>
+				<tr>
+					<td><h3><%= user.getName() %></h3></td>
+					<td><%= user.getEmail() %></td>
+					<td>
+						<% for (Board board : user.getBoards()) { %>
+							
+							<% if (!board.isPrivate()) { %>
+								<a href="Boards?id=<%= board.getId() %>">Public</a>
+							<% } else if (user.getId() == current_user.getId() || (board.isPrivate() && usersBean.isFriendsWith(current_user.getId(), user.getId()))) { %>							
+								<a href="Boards?id=<%= board.getId() %>">Private</a>
+							<% } %>
+							&nbsp;
+						<% } %>
+					</td>
+					<td>
+						<% if (current_user.getId() == user.getId()) { %>
+							This is you.
+						<% } else { %>
 		
-		<% if (user_id == user.getId()) { %>
-			This is you.
-		<% } else { %>
-		
-			<% if (theusers.isPendingFriendsWith(user.getId(), user_id, false)) { %>
-				
-				<form action="Users" method="post">
-					<input type="hidden" value="<%= user.getId() %>" name="accept_friend_id" />
-					<input type="submit" value="Accept Friendship" />
-				</form>
-			<% } else if (!theusers.isFriendsWith(user_id, user.getId()) && !theusers.isPendingFriendsWith(user_id, user.getId(), true)) { %>
-				<form action="Users" method="post">
-					<input type="hidden" value="<%= user.getId() %>" name="request_friend_id" />
-					<input type="submit" value="Request Friendship" />
-				</form>		
-			<% } else if (theusers.isPendingFriendsWith(user_id, user.getId(), false)) { %>
-				(Request sent. Awaiting confirmation.)
-			<% } else { %>
-				(Friend)
-			<% } %>
-		<% } %>
-	<% } %>
+							<% if (usersBean.isPendingFriendsWith(user.getId(), current_user.getId(), false)) { %>
+								
+								<form action="Users" method="post">
+									<input type="hidden" value="<%= user.getId() %>" name="accept_friend_id" />
+									<input type="submit" value="Accept Friendship" />
+								</form>
+							<% } else if (!usersBean.isFriendsWith(current_user.getId(), user.getId()) && !usersBean.isPendingFriendsWith(current_user.getId(), user.getId(), true)) { %>
+								<form action="Users" method="post">
+									<input type="hidden" value="<%= user.getId() %>" name="request_friend_id" />
+									<input type="submit" value="Request Friendship" />
+								</form>		
+							<% } else if (usersBean.isPendingFriendsWith(current_user.getId(), user.getId(), false)) { %>
+								(Request sent. Awaiting confirmation.)
+							<% } else { %>
+								(Friend)
+							<% } %>
+						<% } %>
+					</td>
+				</tr>
+			<% } %>			
+		</tbody>
+	</table>
 </body>
 </html>

@@ -13,9 +13,9 @@ public @Stateless class AuthenticationBean implements Authentication {
 	@PersistenceContext(unitName="PhasebookJPA")
 	private EntityManager em;
 	
-	public int login(String email, String password) {
+	public User login(String email, String password) {
 		
-		List<User> results = em.createQuery("SELECT u FROM User u WHERE u.email = :user_email AND u.password = :user_password")
+		List<User> results = em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.boards WHERE u.email = :user_email AND u.password = :user_password")
 		.setParameter("user_email", email).setParameter("user_password", password).getResultList();
 		
 		if(!results.isEmpty()) {
@@ -24,11 +24,11 @@ public @Stateless class AuthenticationBean implements Authentication {
 			
 			user_to_be_logged.setLoggedIn(true);
 			em.persist(user_to_be_logged);
-			return user_to_be_logged.getId();
+			return user_to_be_logged;
 		} else {
 			// user not found			
 		}
-		return -1;
+		return null;
 		
 	}
 

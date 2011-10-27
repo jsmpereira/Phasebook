@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsmp.is.phasebook.db.User;
 import jsmp.is.phasebook.ejb.Authentication;
 
 /**
@@ -18,7 +19,7 @@ import jsmp.is.phasebook.ejb.Authentication;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    @EJB private Authentication authentication;
+    @EJB private Authentication authenticationBean;
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,13 +41,13 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int user_id = authentication.login(request.getParameter("email"), request.getParameter("password")); 
+		User user = authenticationBean.login(request.getParameter("email"), request.getParameter("password")); 
 		
-		if (user_id != -1) {
+		if (user != null) {
 			request.setAttribute("logged", Boolean.TRUE);
 			
 			// add user to session
-			request.getSession(true).setAttribute("user_id", user_id);
+			request.getSession(true).setAttribute("user", user);
 			
 		} else {
 			request.setAttribute("logged", Boolean.FALSE);

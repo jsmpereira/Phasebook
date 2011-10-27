@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsmp.is.phasebook.db.User;
 import jsmp.is.phasebook.ejb.Authentication;
 
 /**
@@ -18,7 +19,7 @@ import jsmp.is.phasebook.ejb.Authentication;
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@EJB private Authentication authentication;
+	@EJB private Authentication authenticationBean;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,9 +33,9 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int user_id =  (Integer) request.getSession().getAttribute("user_id");
+		User current_user =  (User) request.getSession().getAttribute("user");
 		
-		if (authentication.logout(user_id)) {
+		if (authenticationBean.logout(current_user.getId())) {
 			request.setAttribute("quit", Boolean.TRUE);
 			request.getSession().invalidate();
 		} else {

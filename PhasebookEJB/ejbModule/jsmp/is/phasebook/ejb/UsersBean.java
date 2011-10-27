@@ -17,7 +17,7 @@ public @Stateless class UsersBean implements Users {
 	private EntityManager em;
 	
 	public List<User> getUsers() {
-		return em.createQuery("SELECT u FROM User u").getResultList();
+		return em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.boards").getResultList();
 	}
 
 	public void requestFriendShip(int user_id, int friend_id) {
@@ -49,7 +49,7 @@ public @Stateless class UsersBean implements Users {
 
 	@Override
 	public List<User> findUsers(String query) {
-		return em.createQuery("SELECT u FROM User u WHERE name LIKE :name").setParameter("name", "%"+query+"%").getResultList();
+		return em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.boards WHERE name LIKE :name").setParameter("name", "%"+query+"%").getResultList();
 	}
 
 	@Override

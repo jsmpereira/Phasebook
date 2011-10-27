@@ -33,9 +33,8 @@ public @Stateless class MessageBoardBean implements MessageBoard {
 		em.persist(topic);
 	}
 
-	public List<Topic> getTopics(int board_id) {
-		Board board = em.find(Board.class, board_id);
-		return board.getTopics();
+	public Board getBoard(int board_id) {
+		return em.find(Board.class, board_id);
 	}
 
 }

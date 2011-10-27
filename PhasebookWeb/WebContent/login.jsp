@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css" />
 <title>PhaseBook Login</title>
 </head>
 <body>
@@ -32,9 +32,6 @@
 			out.println("Logout successful.");
 		}
 	}
-	
-	out.println(session.getAttribute("user_id"));
-	
 %>
 
 <form action="Login" method="post">

@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsmp.is.phasebook.db.Board;
+import jsmp.is.phasebook.db.User;
 import jsmp.is.phasebook.ejb.MessageBoard;
+import jsmp.is.phasebook.ejb.Users;
 
 /**
  * Servlet implementation class BoardServlet
@@ -18,7 +21,8 @@ import jsmp.is.phasebook.ejb.MessageBoard;
 public class BoardsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@EJB MessageBoard messageboard;
+	@EJB MessageBoard boardsBean;
+	@EJB Users usersBean;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,10 +37,18 @@ public class BoardsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int board_id = Integer.parseInt(request.getParameter("id"));
+		if (request.getParameter("id") != null) {
+			
+			User current_user = (User) request.getSession().getAttribute("user");
+			int board_id = Integer.parseInt(request.getParameter("id"));
+			Board board = boardsBean.getBoard(board_id);
+			
+			if (board.isPrivate() && usersBean.isFriendsWith(current_user.getId(), board.getOwner().getId())) {
+				
+			}
 		
-		request.setAttribute("topics", messageboard.getTopics(board_id));
-		
+			request.setAttribute("board", board);
+		}
 		request.getRequestDispatcher("board.jsp").forward(request, response);
 	}
 
@@ -45,11 +57,12 @@ public class BoardsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int user_id = (Integer) request.getSession().getAttribute("user_id");
+		User current_user = (User) request.getSession().getAttribute("user");
+		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		
-		messageboard.createTopic(Integer.parseInt(request.getParameter("board_id")), request.getParameter("title"), request.getParameter("body"), user_id);
+		boardsBean.createTopic(board_id, request.getParameter("title"), request.getParameter("body"), current_user.getId());
 		
-		request.getRequestDispatcher("/board.jsp").forward(request, response);
+		response.sendRedirect("/PhasebookWeb/Boards?id="+board_id);
 	}
 
 }
