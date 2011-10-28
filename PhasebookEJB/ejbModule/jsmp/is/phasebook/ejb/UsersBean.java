@@ -17,7 +17,7 @@ public @Stateless class UsersBean implements Users {
 	private EntityManager em;
 	
 	public List<User> getUsers() {
-		return em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.boards").getResultList();
+		return em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.boards ORDER BY u.name ASC").getResultList();
 	}
 
 	public void requestFriendShip(int user_id, int friend_id) {

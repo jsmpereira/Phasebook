@@ -1,7 +1,7 @@
 package jsmp.is.phasebook.db;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,9 +25,9 @@ public class User implements Serializable {
 	private String password;
 	private boolean loggedIn;
 	@OneToMany(mappedBy="owner") 
-	private List<Board> boards;
+	private Set<Board> boards;
 	@OneToMany(mappedBy="friend")
-	private List<Friendship> friends;
+	private Set<Friendship> friends;
 	
 	public User() {}
 	
@@ -82,19 +82,19 @@ public class User implements Serializable {
 		return loggedIn;
 	}
 
-	public void setBoards(List<Board> boards) {
+	public void setBoards(Set<Board> boards) {
 		this.boards = boards;
 	}
 
-	public List<Board> getBoards() {
+	public Set<Board> getBoards() {
 		return boards;
 	}
 
-	public void setFriends(List<Friendship> friends) {
+	public void setFriends(Set<Friendship> friends) {
 		this.friends = friends;
 	}
 
-	public List<Friendship> getFriends() {
+	public Set<Friendship> getFriends() {
 		return friends;
 	}
 

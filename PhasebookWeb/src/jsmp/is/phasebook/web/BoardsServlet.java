@@ -1,6 +1,9 @@
 package jsmp.is.phasebook.web;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -8,6 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import jsmp.is.phasebook.db.Board;
 import jsmp.is.phasebook.db.User;
@@ -57,10 +66,56 @@ public class BoardsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int board_id = 0;
+		String title = null, body = null;
+		String fileName = null;
 		User current_user = (User) request.getSession().getAttribute("user");
-		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		
-		boardsBean.createTopic(board_id, request.getParameter("title"), request.getParameter("body"), current_user.getId());
+		if (ServletFileUpload.isMultipartContent(request)){
+			// Create a factory for disk-based file items
+			FileItemFactory factory = new DiskFileItemFactory();
+
+			// Create a new file upload handler
+			ServletFileUpload upload = new ServletFileUpload(factory);
+
+			try {
+				// Parse the request
+				List items = upload.parseRequest(request);
+				
+				// Process the uploaded items
+				Iterator iter = items.iterator();
+				while (iter.hasNext()) {
+				    FileItem item = (FileItem) iter.next();
+
+				    if (item.isFormField()) {
+				    	
+				    	if (item.getFieldName().equalsIgnoreCase("title")) {
+				    		title = item.getString();
+				    	} else if (item.getFieldName().equalsIgnoreCase("body")) {
+				    		body = item.getString();
+				    	} else {
+				    		board_id = Integer.parseInt(item.getString());
+				    	}
+
+				    } else {
+				    	if (item.getSize() != 0) {
+				    		fileName = item.getName(); 
+				    		File saveFile = new File("/usr/local/jboss/server/default/deploy/ROOT.war/images/"+fileName);          
+				    		item.write(saveFile);
+				    	}
+				    }
+				}
+				
+				boardsBean.createTopic(board_id, title, body, fileName, current_user.getId());
+
+			} catch(FileUploadException ex) {  
+	            log("Error encountered while parsing the request",ex);  
+	        } catch(Exception ex) {  
+	            log("Error encountered while uploading file",ex);  
+	        }
+		}/* else {
+			boardsBean.createTopic(board_id, request.getParameter("title"), request.getParameter("body"), fileName, current_user.getId());
+		}*/
 		
 		response.sendRedirect("/PhasebookWeb/Boards?id="+board_id);
 	}

@@ -1,14 +1,17 @@
 package jsmp.is.phasebook.db;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +30,8 @@ public class Topic {
 	@Column(columnDefinition="TEXT")
 	private String body;
 	private Date created_at;
+	@OneToMany(mappedBy="topic", fetch = FetchType.EAGER)
+	private Set<Asset> assets;
 	
 	public Topic() {}
 
@@ -83,5 +88,13 @@ public class Topic {
 
 	public Date getCreated_at() {
 		return created_at;
+	}
+
+	public void setAssets(Set<Asset> assets) {
+		this.assets = assets;
+	}
+
+	public Set<Asset> getAssets() {
+		return assets;
 	}
 }

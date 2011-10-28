@@ -12,3 +12,7 @@ ul#menu li {
 	display: inline;
 	padding: 3px;
 }
+
+.image {
+	width: 200px;
+}

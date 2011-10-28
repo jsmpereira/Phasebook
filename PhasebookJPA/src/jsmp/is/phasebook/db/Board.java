@@ -1,6 +1,6 @@
 package jsmp.is.phasebook.db;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,8 @@ public class Board {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@OneToMany(mappedBy="board", fetch = FetchType.EAGER)
-	private List<Topic> topics;
+	@OrderBy("created_at ASC")
+	private Set<Topic> topics;
 	@ManyToOne
 	private User owner;
 	private boolean isPrivate;
@@ -37,11 +39,11 @@ public class Board {
 		return id;
 	}
 
-	public void setTopics(List<Topic> topics) {
+	public void setTopics(Set<Topic> topics) {
 		this.topics = topics;
 	}
 
-	public List<Topic> getTopics() {
+	public Set<Topic> getTopics() {
 		return topics;
 	}
 
