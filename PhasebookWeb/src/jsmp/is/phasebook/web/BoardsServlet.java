@@ -52,13 +52,13 @@ public class BoardsServlet extends HttpServlet {
 			int board_id = Integer.parseInt(request.getParameter("id"));
 			Board board = boardsBean.getBoard(board_id);
 			
-			if (board.isPrivate() && usersBean.isFriendsWith(current_user.getId(), board.getOwner().getId())) {
-				
-			}
-		
-			request.setAttribute("board", board);
+			if (current_user.getId() != board.getOwner().getId() && board.isPrivate() && !usersBean.isFriendsWith(current_user.getId(), board.getOwner().getId())) {
+				response.sendRedirect("/PhasebookWeb/Users?oops=true");
+			} else {
+				request.setAttribute("board", board);
+				request.getRequestDispatcher("board.jsp").forward(request, response);
+			}	
 		}
-		request.getRequestDispatcher("board.jsp").forward(request, response);
 	}
 
 	/**

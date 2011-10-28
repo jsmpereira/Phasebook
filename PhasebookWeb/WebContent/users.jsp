@@ -21,6 +21,12 @@
 
 <jsp:include page="sidebar.jsp" />
 
+<% 
+	if (request.getParameter("oops") != null && request.getParameter("oops").equals("true")) {
+		out.println("You are not allowed to access that page.");
+	}
+%>
+
 <h1>Users</h1>
 
 	<form action="Users" method="get">
