@@ -1,6 +1,7 @@
 package jsmp.is.phasebook.ejb;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,6 +43,11 @@ public @Stateless class MessageBoardBean implements MessageBoard {
 
 	public Board getBoard(int board_id) {
 		return em.find(Board.class, board_id);
+	}
+
+	@Override
+	public List<Asset> getAssets() {		
+		return em.createQuery("SELECT a FROM Asset a").getResultList();
 	}
 
 }

@@ -14,6 +14,7 @@
   		</a></li>
   <% } %>
   <li><a href="Users">Users</a></li>
+  <li><a href="Photos">Photos</a></li>
   <li><%= new java.util.Date() %></li>
   <li>Welcome, <%= current_user.getName() %></li>
 </ul>
