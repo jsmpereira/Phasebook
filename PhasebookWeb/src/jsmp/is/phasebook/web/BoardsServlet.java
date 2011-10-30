@@ -12,16 +12,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsmp.is.phasebook.db.Board;
+import jsmp.is.phasebook.db.User;
+import jsmp.is.phasebook.ejb.MessageBoard;
+import jsmp.is.phasebook.ejb.Notifier;
+import jsmp.is.phasebook.ejb.Users;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
-import jsmp.is.phasebook.db.Board;
-import jsmp.is.phasebook.db.User;
-import jsmp.is.phasebook.ejb.MessageBoard;
-import jsmp.is.phasebook.ejb.Users;
 
 /**
  * Servlet implementation class BoardServlet
@@ -32,6 +33,7 @@ public class BoardsServlet extends HttpServlet {
 	
 	@EJB MessageBoard boardsBean;
 	@EJB Users usersBean;
+	@EJB Notifier notifierBean;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -106,7 +108,8 @@ public class BoardsServlet extends HttpServlet {
 				    }
 				}
 				
-				boardsBean.createTopic(board_id, title, body, fileName, current_user.getId());
+				int topic_id = boardsBean.createTopic(board_id, title, body, fileName, current_user.getId());
+				notifierBean.boardNotification(board_id, topic_id);
 
 			} catch(FileUploadException ex) {  
 	            log("Error encountered while parsing the request",ex);  

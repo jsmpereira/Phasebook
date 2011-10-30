@@ -3,6 +3,7 @@ package jsmp.is.phasebook.ejb;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +17,8 @@ public @Stateless class MessageBoardBean implements MessageBoard {
 
 	@PersistenceContext(unitName="PhasebookJPA")
 	private EntityManager em;
+	@EJB Notifier notifier;
+	
 	
 	public void createMessageBoard(User owner, boolean isPrivate) {
 		
@@ -24,7 +27,7 @@ public @Stateless class MessageBoardBean implements MessageBoard {
 		em.persist(board);
 	}
 
-	public void createTopic(int board_id, String title, String body, String filepath, int user_id) {
+	public int createTopic(int board_id, String title, String body, String filepath, int user_id) {
 		Board board = em.find(Board.class, board_id);
 		User creator = em.find(User.class, user_id);
 				
@@ -38,7 +41,8 @@ public @Stateless class MessageBoardBean implements MessageBoard {
 			asset.setPath(filepath);
 			asset.setTopic(topic);
 			em.persist(asset);
-		}		
+		}
+		return topic.getId();
 	}
 
 	public Board getBoard(int board_id) {
