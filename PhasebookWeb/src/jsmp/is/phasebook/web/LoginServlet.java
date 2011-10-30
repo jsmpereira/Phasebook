@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("logged", Boolean.TRUE);
 			
 			// add user to session
-			request.getSession(true).setAttribute("user", user);
+			request.getSession(true).setAttribute("current_user", user);
 			
 		} else {
 			request.setAttribute("logged", Boolean.FALSE);

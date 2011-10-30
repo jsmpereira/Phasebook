@@ -50,7 +50,7 @@ public class BoardsServlet extends HttpServlet {
 		
 		if (request.getParameter("id") != null) {
 			
-			User current_user = (User) request.getSession().getAttribute("user");
+			User current_user = (User) request.getSession().getAttribute("current_user");
 			int board_id = Integer.parseInt(request.getParameter("id"));
 			Board board = boardsBean.getBoard(board_id);
 			
@@ -71,7 +71,7 @@ public class BoardsServlet extends HttpServlet {
 		int board_id = 0;
 		String title = null, body = null;
 		String fileName = null;
-		User current_user = (User) request.getSession().getAttribute("user");
+		User current_user = (User) request.getSession().getAttribute("current_user");
 		
 		if (ServletFileUpload.isMultipartContent(request)){
 			// Create a factory for disk-based file items

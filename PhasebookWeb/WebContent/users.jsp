@@ -16,7 +16,7 @@
 	Users usersBean = (Users) ic.lookup("Phasebook/UsersBean/remote");
 	
 	List<User> users = (List<User>) request.getAttribute("users");
-	User current_user  = (User) session.getAttribute("user");
+	User current_user  = (User) session.getAttribute("current_user");
 %>
 
 <jsp:include page="sidebar.jsp" />

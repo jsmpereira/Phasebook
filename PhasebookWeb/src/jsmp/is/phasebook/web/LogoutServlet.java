@@ -33,7 +33,7 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User current_user =  (User) request.getSession().getAttribute("user");
+		User current_user =  (User) request.getSession().getAttribute("current_user");
 		
 		if (authenticationBean.logout(current_user.getId())) {
 			request.setAttribute("quit", Boolean.TRUE);

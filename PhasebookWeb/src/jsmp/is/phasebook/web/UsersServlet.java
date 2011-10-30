@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsmp.is.phasebook.db.User;
 import jsmp.is.phasebook.ejb.Users;
 
 /**
@@ -53,15 +54,15 @@ public class UsersServlet extends HttpServlet {
 		// TODO search users
 		
 		// friendship request
-		int user_id = (Integer) request.getSession().getAttribute("user_id");
+		User current_user = (User) request.getSession().getAttribute("current_user");
 		
 		if (request.getParameter("accept_friend_id") != null) {
 			int friend_id = Integer.parseInt(request.getParameter("accept_friend_id"));
-			usersBean.acceptFriendship(friend_id, user_id);
+			usersBean.acceptFriendship(friend_id, current_user.getId());
 		}
 		else {
 			 int friend_id = Integer.parseInt(request.getParameter("request_friend_id"));
-			 usersBean.requestFriendShip(user_id, friend_id);
+			 usersBean.requestFriendShip(current_user.getId(), friend_id);
 		}
 		
 		response.sendRedirect("/PhasebookWeb/Users");

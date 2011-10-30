@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 
 import jsmp.is.phasebook.db.Friendship;
 import jsmp.is.phasebook.db.User;
-import jsmp.is.phasebook.ejb.Users;
 
 public @Stateless class UsersBean implements Users {
 
@@ -35,7 +34,7 @@ public @Stateless class UsersBean implements Users {
 	@Override
 	public List<Friendship> getFriends(int user_id) {
 		//return em.find(User.class, user_id).getFriends();
-		return em.createQuery("SELECT f from Friendship f where user_id = :user_id AND accepted_at IS NOT NULL").setParameter("user_id", user_id).getResultList();
+		return em.createQuery("SELECT f from Friendship f where (user_id = :user_id OR friend_id = :user_id) AND accepted_at IS NOT NULL").setParameter("user_id", user_id).getResultList();
 	}
 	
 	
