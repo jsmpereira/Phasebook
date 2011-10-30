@@ -19,6 +19,20 @@
 	<li><strong>Email:</strong> <c:out value="${user.email}" /></li>
 </ul>
 
+<c:forEach items="${user.boards}" var="board">
+	<a href="Boards?id=${board.id}">
+		<c:choose>
+			<c:when test="${board.private}">
+				Private Board
+			</c:when>
+			<c:otherwise>
+				Public Board
+			</c:otherwise>
+		</c:choose>
+ 	</a>
+ 	&nbsp;
+</c:forEach>
+
 <h1>Friends</h1>
 	<ul>
 		<c:forEach items="${friends}" var="friendship" >
@@ -32,8 +46,6 @@
 			</c:choose>
 		</c:forEach>
 	</ul>
-	
-	
 	
 </body>
 </html>

@@ -8,13 +8,14 @@
   	<a href="Boards?id=${board.id}">
 	  	<c:choose>
 	  		<c:when test="${board.private}">
-	  			<c:out value="Private Board" />
+	  			Private Board
 	  		</c:when>
 	  		<c:otherwise>
-	  			<c:out value="Public Board" />
+	  			Public Board
 	  		</c:otherwise>
 	  	</c:choose>
 	  </a>
+	  &nbsp;
   </c:forEach>
   <li><a href="Users">Users</a></li>
   <li><a href="Photos">Photos</a></li>
