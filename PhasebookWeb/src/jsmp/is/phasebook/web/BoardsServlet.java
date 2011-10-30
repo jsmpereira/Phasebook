@@ -109,7 +109,10 @@ public class BoardsServlet extends HttpServlet {
 				}
 				
 				int topic_id = boardsBean.createTopic(board_id, title, body, fileName, current_user.getId());
-				notifierBean.boardNotification(board_id, topic_id);
+				Board board = boardsBean.getBoard(board_id);
+				
+				if (board.getOwner().getId() != current_user.getId())
+					notifierBean.boardNotification(board_id, topic_id);
 
 			} catch(FileUploadException ex) {  
 	            log("Error encountered while parsing the request",ex);  
