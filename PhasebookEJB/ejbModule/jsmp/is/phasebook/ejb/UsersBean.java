@@ -18,6 +18,10 @@ public @Stateless class UsersBean implements Users {
 	public List<User> getUsers() {
 		return em.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.boards ORDER BY u.name ASC").getResultList();
 	}
+	
+	public User getUser(int user_id) {
+		return em.find(User.class, user_id);
+	}
 
 	public void requestFriendShip(int user_id, int friend_id) {
 		
@@ -54,7 +58,7 @@ public @Stateless class UsersBean implements Users {
 	@Override
 	public boolean isFriendsWith(int user_id, int friend_id) {
 		
-		List<Friendship> friends = em.createQuery("SELECT f FROM Friendship f WHERE accepted_at IS NOT NULL AND (user_id = :user_id AND friend_id = :friend_id) OR (user_id = :friend_id AND friend_id = :user_id)").setParameter("user_id", user_id).setParameter("friend_id", friend_id).getResultList();
+		List<Friendship> friends = em.createQuery("SELECT f FROM Friendship f WHERE accepted_at IS NOT NULL AND ((user_id = :user_id AND friend_id = :friend_id) OR (user_id = :friend_id AND friend_id = :user_id))").setParameter("user_id", user_id).setParameter("friend_id", friend_id).getResultList();
 		
 		if (!friends.isEmpty())
 			return true;

@@ -8,23 +8,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" type="text/css" href="styles.css" />
-<title>Phasebook Friends</title>
+<title>Phasebook Profile</title>
 </head>
 <body>
 <jsp:include page="sidebar.jsp" />
+
+<h1><c:out value="${user.name}'s Profile" /></h1>
+
+<ul>
+	<li><strong>Email:</strong> <c:out value="${user.email}" /></li>
+</ul>
 
 <h1>Friends</h1>
 	<ul>
 		<c:forEach items="${friends}" var="friendship" >
 			<c:choose>
-				<c:when test="${friendship.friend.id == current_user.id}">
-					<li><c:out value="${friendship.user.name}" /></li>
+				<c:when test="${friendship.friend.id == user.id}">
+					<li><a href="Profile?id=${friendship.user.id}"><c:out value="${friendship.user.name}" /></a></li>
 				</c:when>
 				<c:otherwise>
-					<li><c:out value="${friendship.friend.name}" /></li>
+					<li><a href="Profile?id=${friendship.friend.id}"><c:out value="${friendship.friend.name}" /></a></li>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
 	</ul>
+	
+	
+	
 </body>
 </html>

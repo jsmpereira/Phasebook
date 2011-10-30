@@ -10,6 +10,7 @@ import jsmp.is.phasebook.db.User;
 @Remote
 public interface Users {
 	public List<User> getUsers();
+	public User getUser(int user_id);
 	public void requestFriendShip(int user_id, int friend_id);
 	public List<Friendship> getFriends(int user_id);
 	public void acceptFriendship(int user_id, int friend_id);

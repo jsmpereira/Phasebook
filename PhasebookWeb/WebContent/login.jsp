@@ -34,6 +34,7 @@
 	}
 %>
 
+<h1>Login to Phasebook</h1>
 <form action="Login" method="post">
 
 	<label>Email</label>
@@ -46,7 +47,7 @@
 
 </form>
 
-<p><a href="Logout">logout</a></p>
+<p>Don't have an account yet? <a href="Register">Create one</a>.</p>
 
 </body>
 </html>

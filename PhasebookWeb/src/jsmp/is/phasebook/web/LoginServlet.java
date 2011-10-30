@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("logged", Boolean.FALSE);
 		}
 		
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		response.sendRedirect("/PhasebookWeb/Profile");
 	}
 
 }

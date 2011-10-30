@@ -42,7 +42,7 @@ public class LogoutServlet extends HttpServlet {
 			request.setAttribute("quit", Boolean.FALSE);
 		}
 		
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		response.sendRedirect("/PhasebookWeb/Login");
 	}
 
 	/**

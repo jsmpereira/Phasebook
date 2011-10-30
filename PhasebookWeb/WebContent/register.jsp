@@ -28,5 +28,7 @@
 	</dl>
 </form>
 
+<p>Already have an account? <a href="Login">Login</a>.</p>
+
 </body>
 </html>
