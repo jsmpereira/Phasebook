@@ -10,25 +10,28 @@
 </head>
 <body>
 
-<h1>Register to Phasebook</h1>
+<div id="register">
+	<h1>Register to Phasebook</h1>
 
-<form action="Register" method="post">
-	<dl>
-		<dd><label>Name</label></dd>
-		<dt><input type="text" name="name" /></dt>
-	
-		<dd><label>Email</label></dd>
-		<dt><input type="text" name="email" /></dt>
-	
-		<dd><label>Password</label></dd>
-		<dt><input type="password" name="password" /></dt>
-	
-		<dd></dd>
-		<dt><input type="submit" value="Register"/></dt>
-	</dl>
-</form>
+	<form action="Register" method="post">
+		<dl>
+			<dd><label>Name</label></dd>
+			<dt><input type="text" name="name" /></dt>
+		
+			<dd><label>Email</label></dd>
+			<dt><input type="text" name="email" /></dt>
+		
+			<dd><label>Password</label></dd>
+			<dt><input type="password" name="password" /></dt>
+		
+			<dd></dd>
+			<dt><input type="submit" value="Register"/></dt>
+		</dl>
+	</form>
 
-<p>Already have an account? <a href="Login">Login</a>.</p>
+	<p>Already have an account? <br /> <a href="Login">Login</a>.</p>
+
+</div>
 
 </body>
 </html>

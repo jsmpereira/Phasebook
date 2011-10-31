@@ -1,18 +1,77 @@
 @CHARSET "UTF-8";
 
 body { 
-	margin: 0px;
+	margin: 20px;
 	padding: 10px;
 	font-size: 11px;
 	font-family: "Lucida Grande", "Helvetica", "Verdana", "Arial";
 }
 
+label {
+	margin: 5px;
+	padding: 5px;
+	font-weight: strong;
+}
+
+dd {
+	margin: 5px;
+	display: block;
+}
+
+input[type="text"], input[type="password"] {
+	width: 180px;
+}
+
+#wrapper {
+	width: 700px;
+	margin: 20px;
+	float: left;
+}
+
+#logo {
+	border-bottom: 3px double #ccc;
+}
+
+ul#menu {
+	float: right;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
 ul#menu li {
 	list-style: none;
-	display: inline;
 	padding: 3px;
+	text-align: right;
 }
 
 .image {
 	width: 200px;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+
+#login, #register {
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	width: 200px;
+	padding: 20px;
+}
+
+.topic {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 5px;
+	padding: 10px;
+}
+
+#new_topic {
+	border: 1px solid #ccc;
+	padding: 20px;
+	width: 300px;
+}
+
+#search {
+	padding: 20px;
+	width: 280px;
+	border: 1px solid #ccc;
+	margin-bottom: 20px;
 }

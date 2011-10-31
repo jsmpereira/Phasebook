@@ -15,7 +15,6 @@
 
 <h1>Lottery</h1>
 
-
 Round <c:out value="${lotteryBean.round-1}"></c:out> winning number:
 <h2><c:out value="${lotteryBean.lucky_number}"></c:out></h2>
 <h3>Next run at <c:out value="${lotteryBean.next_run}"></c:out></h3>

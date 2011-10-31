@@ -34,20 +34,23 @@
 	}
 %>
 
-<h1>Login to Phasebook</h1>
-<form action="Login" method="post">
-
-	<label>Email</label>
-	<input type="text" name="email"/>
+<div id="login">
+	<h1>Login to Phasebook</h1>
+	<form action="Login" method="post">
 	
-	<label>Password</label>
-	<input type="password" name="password"/>
-
-	<input type="submit" value="Submit"/>
-
-</form>
-
-<p>Don't have an account yet? <a href="Register">Create one</a>.</p>
+		<dl>
+			<dt><label>Email</label></dt>
+			<dd><input type="text" name="email"/></dd>
+			
+			<dt><label>Password</label></dt>
+			<dd><input type="password" name="password"/></dd>
+		</dl>
+		<input type="submit" value="Submit"/>
+	
+	</form>
+	
+	<p>Don't have an account yet? <br/> <a href="Register">Create one</a>.</p>
+</div>
 
 </body>
 </html>

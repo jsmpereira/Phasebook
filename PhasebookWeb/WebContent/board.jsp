@@ -14,6 +14,8 @@
 
 <jsp:include page="sidebar.jsp" />
 
+<div id="wrapper">
+
 <h1>
 	<c:out value="${board.owner.name}" />'s
 	<c:if test="${board.private}">
@@ -23,32 +25,36 @@
 </h1>
 
 	<c:forEach items="${board.topics}" var="topic" >
-		<h3><c:out value="${topic.title}" /></h3>
-		<small><c:out value="${topic.created_at}" /> <c:out value="${topic.creator.name}" /></small>
-		<blockquote><c:out value="${topic.body}" /></blockquote>
-		
-		<c:forEach items="${topic.assets}" var="asset">
-			<img src="/images/${asset.path}" class="image"/>
-		</c:forEach>
+		<div class="topic">
+			<h3><c:out value="${topic.title}" /></h3>
+			<small><c:out value="${topic.created_at}" /> <c:out value="${topic.creator.name}" /></small>
+			<blockquote><c:out value="${topic.body}" /></blockquote>
+			
+			<c:forEach items="${topic.assets}" var="asset">
+				<img src="/images/${asset.path}" class="image"/>
+			</c:forEach>
+		</div>
 	</c:forEach>
 
-<h2>Create topic </h2>
-<form action="Boards" method="post" enctype="multipart/form-data">
-	<dl>
-		<dd><label>Title</label></dd>
-		<dt><input type="text" name="title" /></dt>
-	
-		<dd><label>Body</label></dd>
-		<dt><textarea name="body" cols="25" rows="5"></textarea></dt>
-	
-		<dd><label>Photo</label></dd>
-		<dt><input type="file" name="photo"/></dt>
-		<dt><input type="hidden" value="${param.id}" name="board_id"/></dt>
+<div id="new_topic">
+	<h2>Create topic </h2>
+	<form action="Boards" method="post" enctype="multipart/form-data">
+		<dl>
+			<dd><label>Title</label></dd>
+			<dt><input type="text" name="title" /></dt>
 		
-		<dd></dd>
-		<dt><input type="submit" value="Post"/></dt>
-	</dl>
-</form>
-
+			<dd><label>Body</label></dd>
+			<dt><textarea name="body" cols="25" rows="5"></textarea></dt>
+		
+			<dd><label>Photo</label></dd>
+			<dt><input type="file" name="photo"/></dt>
+			<dt><input type="hidden" value="${param.id}" name="board_id"/></dt>
+			
+			<dd></dd>
+			<dt><input type="submit" value="Post"/></dt>
+		</dl>
+	</form>
+</div>
+</div>
 </body>
 </html>

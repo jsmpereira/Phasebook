@@ -29,10 +29,14 @@
 
 <h1>Users</h1>
 
-	<form action="Users" method="get">
+	<form action="Users" method="get" id="search">
 		<input type="text" name="user_search" />
 		<input type="submit" value="Search" />
 	</form>
+	
+	<% if (request.getParameter("user_search") != null) { %>
+		<h3><u>Search results for: <%= request.getParameter("user_search") %></u></h3>
+	<% } %>
 
 	<table>
 		<thead>
