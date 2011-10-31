@@ -25,16 +25,7 @@
   </c:forEach>
   <li><a href="Users">Users</a></li>
   <li><a href="Photos">Photos</a></li>
+  <li><a href="Lottery">Lottery</a></li>
   <li>Welcome, <a href="Profile"><c:out value="${current_user.name}" /></a></li>
   <li><a href="Logout">Logout</a></li>
 </ul>
-
-<div>
-	Current Lottery Number:
-	<% if (lotteryBean.getNext_run() != null) { %>
-		<h3><%= lotteryBean.getLucky_number() %></h3>
-		<br /><small>(next number at <%= lotteryBean.getNext_run() %>)</small>
-	<% } else { %>
-		Not available.
-	<% } %>
-</div>
