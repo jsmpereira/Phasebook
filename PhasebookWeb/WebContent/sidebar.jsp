@@ -2,12 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="jsmp.is.phasebook.db.Board" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="javax.naming.*, jsmp.is.phasebook.lottery.TheLottery" %>
-
-<%
-	InitialContext ic = new InitialContext();
-	TheLottery lotteryBean = (TheLottery) ic.lookup("Phasebook/TheLotteryBean/remote");	
-%>
 
 <h1 id="logo">Phasebook</h1>
 <ul id="menu">

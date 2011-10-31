@@ -35,6 +35,8 @@ public class UsersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		request.setAttribute("users_bean", usersBean);
+		
 		if (request.getParameter("user_search") != null) {
 			// search users
 			request.setAttribute("users", usersBean.findUsers(request.getParameter("user_search")));
