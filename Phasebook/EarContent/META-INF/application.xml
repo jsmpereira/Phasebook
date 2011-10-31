@@ -10,4 +10,7 @@
       <context-root>PhasebookWeb</context-root>
     </web>
   </module>
+  <module>
+    <ejb>PhasebookLottery.jar</ejb>
+  </module>
 </application>

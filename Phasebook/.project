@@ -6,6 +6,7 @@
 		<project>PhasebookEJB</project>
 		<project>PhasebookWeb</project>
 		<project>PhasebookJPA</project>
+		<project>PhasebookLottery</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
